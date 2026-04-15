@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>SQM Envases - Stock de Envases</title>
+    <link rel="stylesheet" href="estilos.css">
+    
+    <!-- Firebase v9 compact -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    
+    <!-- Librería para exportar a Excel -->
+    <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+    
+    <!-- Librería para drag & drop -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+</head>
+<body>
+
+<!-- PANTALLA DE INICIO - ELIGE MODO -->
+<div id="inicioContainer" style="display: flex;">
+    <div class="modo-container">
+        <div class="modo-box">
+            <h2>SQM Envases - Stock de Envases</h2>
+            
+            <div class="modo-opcion">
+                <h3>👁️ Modo Vista</h3>
+                <p>Solo para consultar el inventario. No se requiere login.</p>
+                <button id="btnModoVista" class="btn-modo-vista">Entrar como Visitante</button>
+            </div>
+            
+            <div class="separador">
+                <span>O</span>
+            </div>
+            
+            <div class="modo-opcion">
+                <h3>🔧 Modo Administrador</h3>
+                <p>Para agregar o eliminar registros. Requiere usuario y contraseña.</p>
+                <button id="btnModoAdmin" class="btn-modo-admin">Iniciar como Administrador</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FORMULARIO DE LOGIN (solo para modo admin) -->
+<div id="loginContainer" class="login-container" style="display: none;">
+    <div class="login-box">
+        <h2>Acceso Administrador</h2>
+        <p>Ingresa tus credenciales para modificar el inventario.</p>
+        
+        <form id="loginForm">
+            <input type="email" id="loginEmail" placeholder="Correo electrónico" required>
+            <input type="password" id="loginPassword" placeholder="Contraseña" required>
+            <button type="submit">Iniciar Sesión</button>
+        </form>
+        
+        <div id="loginError" class="error-message" style="display: none;"></div>
+        
+        <div class="login-options">
+            <button id="btnVolverInicio" class="btn-volver">← Volver a inicio</button>
+        </div>
+    </div>
+</div>
+
+<!-- APLICACIÓN PRINCIPAL -->
+<div id="mainContainer" class="container" style="display: none;">
+
+    <!-- Barra superior con info del modo -->
+    <div class="user-bar">
+        <div>
+            <span id="userEmail">Modo: Visitante (Solo lectura)</span>
+            <span id="modoInfo"></span>
+        </div>
+        <div>
+            <button id="btnCambiarModo" class="btn-cambiar">Cambiar Modo</button>
+            <button id="btnLogout" style="display: none;">Cerrar Sesión</button>
+        </div>
+    </div>
+
+    <h1>SQM Envases - Stock de Envases</h1>
+
+    <!-- FORMULARIO DE INVENTARIO (solo visible en modo admin) -->
+    <div id="formContainer" style="display: none;">
+        <h2>Agregar Nuevo Registro</h2>
+        <form id="formInventario">
+            <label>Descripción:</label>
+            <select id="descripcion" required>
+                <option value="">Seleccione</option>
+                <option>Etiquetas circulares ProP - 25 kg</option>
+                <option>Etiqueta Tira Ultrasol Micro Rexene Apn de 15kg</option>
+                <option>Etiquetas 100 x 150 mm 1 Sal-Tuco 3¨ Poliolefina</option>
+                <option>Etiqueta Rotulos para Ultrasol Micro Rexene APN de 15kg</option>
+                <option>Etiqueta Retira Ultrasol Micro Rexene Apn de 15kg</option>
+                <option>Etiqueta Ultrasolution Calcium ZeroN - 20 Lt.</option>
+                <option>Sacos vacios FertyBase Magnit Flakes * 25Kg</option>
+                <option>Sacos vacios FertyBase Sulfato de Magnesio Heptahidratado * 25Kg</option>
+                <option>Sacos vacios NMg Fertybase * 25Kg</option>
+                <option>Sacos vacios Qrop Boro * 25 Kg</option>
+                <option>Sacos vacios Qrop K * 50Kg</option>
+                <option>Sacos vacíos Qrop KS (Premium Prill) * 50Kg - POLIPROPILENO</option>
+                <option>Sacos vacíos Qrop Magsul * 50Kg</option>
+                <option>Sacos vacios Qrop Mop G * 50Kg</option>
+                <option>Sacos vacios Qrop Sop G * 50Kg</option>
+                <option>Sacos vacios Qrop Top K *25Kg</option>
+                <option>Sacos vacios Ultrasol Calcium * 25Kg</option>
+                <option>Sacos vacios Ultrasol crecimiento * 25Kg</option>
+                <option>Sacos vacios Ultrasol desarrollo * 25Kg</option>
+                <option>Sacos vacios Ultrasol especial * 25Kg</option>
+                <option>Sacos vacios Ultrasol generico * 25Kg</option>
+                <option>Sacos vacios Ultrasol inicial * 25Kg</option>
+                <option>Sacos vacios Ultrasol K * 25Kg</option>
+                <option>Sacos vacios Ultrasol K-acid * 25Kg</option>
+                <option>Sacos vacios Ultrasol Map * 25Kg</option>
+                <option>Sacos vacios Ultrasol SOP 52 * 25Kg</option>
+                <option>Sacos vacios Ultrasol SOP * 25Kg</option>
+                <option>Sacos vacíos Qrop KS (Premium Prill) *50 Kg - POLIETILENO</option>
+                <option>Sacos vacios Ultrasol Micronutriente FQ48 * 25 Kg</option>
+                <option>Sacos vacios Cloruro Potasio Slb - Qrop MOP S * 50 Kg</option>
+                <option>Sacos vacios FertyBase SOP 50 * 25 Kg.</option>
+                <option>Sacos vacios Cloruro Potasio Granulado * 50 Kg.</option>
+                <option>Sacos vacios Fertibase MAP * 25 Kg.</option>
+                <option>Sacos vacios Ultrasol SOP 51 * 25 Kg.</option>
+                <option>Sacos vacíos Ultrasol Magsul * 25Kg</option>
+                <option>Sacos vacíos Ultrasoline K Plus * 25Kg</option>
+                <option>Sacos vacios Ultrasol Micronutriente ZN15 * 25Kg</option>
+                <option>Sacos vacios Qrop Mix Faster * 50 Kg</option>
+                <option>Sacos vacíos NPC Fertybase * 25Kg</option>
+                <option>Sacos vacíos Ultrasol Color Rosa * 25Kg</option>
+                <option>Sacos vacíos Ultrasol Color Amarillo * 25Kg</option>
+                <option>Sacos vacíos Ultrasol Color Verde * 25Kg</option>
+            </select>
+
+            <label>Fecha:</label>
+            <input type="date" id="fecha" required>
+
+            <label>Operación:</label>
+            <input type="text" id="operacion" placeholder="Ej: Ingreso de almacén" required>
+
+            <label>Ingreso:</label>
+            <input type="number" id="ingreso" value="0" min="0">
+
+            <label>Salida:</label>
+            <input type="number" id="salida" value="0" min="0">
+
+            <label>Observaciones:</label>
+            <textarea id="observaciones" placeholder="Observaciones adicionales (opcional)" rows="3"></textarea>
+
+            <button type="submit">Agregar Registro</button>
+        </form>
+    </div>
+
+    <!-- MOSTRAR TABLA (visible para todos) -->
+    <div class="bloque">
+        <h3>Consultar Inventario</h3>
+        
+        <div id="infoModo">
+            <!-- Mensaje dinámico según el modo -->
+        </div>
+
+        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <select id="productoFiltro" style="flex: 1; min-width: 200px;">
+                <option value="">Seleccione un producto</option>
+                <option>Etiquetas circulares ProP - 25 kg</option>
+                <option>Etiqueta Tira Ultrasol Micro Rexene Apn de 15kg</option>
+                <option>Etiquetas 100 x 150 mm 1 Sal-Tuco 3¨ Poliolefina</option>
+                <option>Etiqueta Rotulos para Ultrasol Micro Rexene APN de 15kg</option>
+                <option>Etiqueta Retira Ultrasol Micro Rexene Apn de 15kg</option>
+                <option>Etiqueta Ultrasolution Calcium ZeroN - 20 Lt.</option>
+                <option>Sacos vacios FertyBase Magnit Flakes * 25Kg</option>
+                <option>Sacos vacios FertyBase Sulfato de Magnesio Heptahidratado * 25Kg</option>
+                <option>Sacos vacios NMg Fertybase * 25Kg</option>
+                <option>Sacos vacios Qrop Boro * 25 Kg</option>
+                <option>Sacos vacios Qrop K * 50Kg</option>
+                <option>Sacos vacíos Qrop KS (Premium Prill) * 50Kg - POLIPROPILENO</option>
+                <option>Sacos vacíos Qrop Magsul * 50Kg</option>
+                <option>Sacos vacios Qrop Mop G * 50Kg</option>
+                <option>Sacos vacios Qrop Sop G * 50Kg</option>
+                <option>Sacos vacios Qrop Top K *25Kg</option>
+                <option>Sacos vacios Ultrasol Calcium * 25Kg</option>
+                <option>Sacos vacios Ultrasol crecimiento * 25Kg</option>
+                <option>Sacos vacios Ultrasol desarrollo * 25Kg</option>
+                <option>Sacos vacios Ultrasol especial * 25Kg</option>
+                <option>Sacos vacios Ultrasol generico * 25Kg</option>
+                <option>Sacos vacios Ultrasol inicial * 25Kg</option>
+                <option>Sacos vacios Ultrasol K * 25Kg</option>
+                <option>Sacos vacios Ultrasol K-acid * 25Kg</option>
+                <option>Sacos vacios Ultrasol Map * 25Kg</option>
+                <option>Sacos vacios Ultrasol SOP 52 * 25Kg</option>
+                <option>Sacos vacios Ultrasol SOP * 25Kg</option>
+                <option>Sacos vacíos Qrop KS (Premium Prill) *50 Kg - POLIETILENO</option>
+                <option>Sacos vacios Ultrasol Micronutriente FQ48 * 25 Kg</option>
+                <option>Sacos vacios Cloruro Potasio Slb - Qrop MOP S * 50 Kg</option>
+                <option>Sacos vacios FertyBase SOP 50 * 25 Kg.</option>
+                <option>Sacos vacios Cloruro Potasio Granulado * 50 Kg.</option>
+                <option>Sacos vacios Fertibase MAP * 25 Kg.</option>
+                <option>Sacos vacios Ultrasol SOP 51 * 25 Kg.</option>
+                <option>Sacos vacíos Ultrasol Magsul * 25Kg</option>
+                <option>Sacos vacíos Ultrasoline K Plus * 25Kg</option>
+                <option>Sacos vacios Ultrasol Micronutriente ZN15 * 25Kg</option>
+                <option>Sacos vacios Qrop Mix Faster * 50 Kg</option>
+                <option>Sacos vacíos NPC Fertybase * 25Kg</option>
+                <option>Sacos vacíos Ultrasol Color Rosa * 25Kg</option>
+                <option>Sacos vacíos Ultrasol Color Amarillo * 25Kg</option>
+                <option>Sacos vacíos Ultrasol Color Verde * 25Kg</option>
+            </select>
+
+            <button type="button" id="btnMostrar">📋 Mostrar Tabla</button>
+            <button type="button" id="btnRecalcular" style="display: none; background-color: #dc3545; color: white;">
+                🔄 Recalcular Stock
+            </button>
+        </div>
+    </div>
+
+    <div id="contenedorTablas"></div>
+
+    <!-- TABLA RESUMEN -->
+    <div class="bloque">
+        <div class="resumen-header">
+            <h3>STOCK DE ENVASES SQM</h3>
+            <button id="btnExportarExcel" class="btn-excel">📊 Exportar a Excel</button>
+        </div>
+        
+        <p>Resumen de stock actualizado de todos los productos</p>
+        
+        <div id="tablaResumenContainer">
+            <p>Cargando resumen de stock...</p>
+        </div>
+    </div>
+
+</div>
+
+<!-- MODAL PARA EDITAR REGISTRO -->
+<div id="modalEditar" class="modal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>✏️ Editar Registro</h3>
+            <button class="modal-close" id="btnCerrarModal">&times;</button>
+        </div>
+        
+        <form id="formEditar">
+            <input type="hidden" id="editItemProducto">
+            <input type="hidden" id="editIndex">
+            
+            <label>Descripción:</label>
+            <select id="editDescripcion" disabled>
+                <option value="">Seleccione</option>
+                <option>Etiquetas circulares ProP - 25 kg</option>
+                <option>Etiqueta Tira Ultrasol Micro Rexene Apn de 15kg</option>
+                <option>Etiquetas 100 x 150 mm 1 Sal-Tuco 3¨ Poliolefina</option>
+                <option>Etiqueta Rotulos para Ultrasol Micro Rexene APN de 15kg</option>
+                <option>Etiqueta Retira Ultrasol Micro Rexene Apn de 15kg</option>
+                <option>Etiqueta Ultrasolution Calcium ZeroN - 20 Lt.</option>
+                <option>Sacos vacios FertyBase Magnit Flakes * 25Kg</option>
+                <option>Sacos vacios FertyBase Sulfato de Magnesio Heptahidratado * 25Kg</option>
+                <option>Sacos vacios NMg Fertybase * 25Kg</option>
+                <option>Sacos vacios Qrop Boro * 25 Kg</option>
+                <option>Sacos vacios Qrop K * 50Kg</option>
+                <option>Sacos vacíos Qrop KS (Premium Prill) * 50Kg - POLIPROPILENO</option>
+                <option>Sacos vacíos Qrop Magsul * 50Kg</option>
+                <option>Sacos vacios Qrop Mop G * 50Kg</option>
+                <option>Sacos vacios Qrop Sop G * 50Kg</option>
+                <option>Sacos vacios Qrop Top K *25Kg</option>
+                <option>Sacos vacios Ultrasol Calcium * 25Kg</option>
+                <option>Sacos vacios Ultrasol crecimiento * 25Kg</option>
+                <option>Sacos vacios Ultrasol desarrollo * 25Kg</option>
+                <option>Sacos vacios Ultrasol especial * 25Kg</option>
+                <option>Sacos vacios Ultrasol generico * 25Kg</option>
+                <option>Sacos vacios Ultrasol inicial * 25Kg</option>
+                <option>Sacos vacios Ultrasol K * 25Kg</option>
+                <option>Sacos vacios Ultrasol K-acid * 25Kg</option>
+                <option>Sacos vacios Ultrasol Map * 25Kg</option>
+                <option>Sacos vacios Ultrasol SOP 52 * 25Kg</option>
+                <option>Sacos vacios Ultrasol SOP * 25Kg</option>
+                <option>Sacos vacíos Qrop KS (Premium Prill) *50 Kg - POLIETILENO</option>
+                <option>Sacos vacios Ultrasol Micronutriente FQ48 * 25 Kg</option>
+                <option>Sacos vacios Cloruro Potasio Slb - Qrop MOP S * 50 Kg</option>
+                <option>Sacos vacios FertyBase SOP 50 * 25 Kg.</option>
+                <option>Sacos vacios Cloruro Potasio Granulado * 50 Kg.</option>
+                <option>Sacos vacios Fertibase MAP * 25 Kg.</option>
+                <option>Sacos vacios Ultrasol SOP 51 * 25 Kg.</option>
+                <option>Sacos vacíos Ultrasol Magsul * 25Kg</option>
+                <option>Sacos vacíos Ultrasoline K Plus * 25Kg</option>
+                <option>Sacos vacios Ultrasol Micronutriente ZN15 * 25Kg</option>
+                <option>Sacos vacios Qrop Mix Faster * 50 Kg</option>
+                <option>Sacos vacíos NPC Fertybase * 25Kg</option>
+                <option>Sacos vacíos Ultrasol Color Rosa * 25Kg</option>
+                <option>Sacos vacíos Ultrasol Color Amarillo * 25Kg</option>
+                <option>Sacos vacíos Ultrasol Color Verde * 25Kg</option>
+            </select>
+
+            <label>Fecha:</label>
+            <input type="date" id="editFecha" required>
+
+            <label>Operación:</label>
+            <input type="text" id="editOperacion" placeholder="Ej: Ingreso de almacén" required>
+
+            <label>Ingreso:</label>
+            <input type="number" id="editIngreso" value="0" min="0">
+
+            <label>Salida:</label>
+            <input type="number" id="editSalida" value="0" min="0">
+
+            <label>Observaciones:</label>
+            <textarea id="editObservaciones" placeholder="Observaciones adicionales (opcional)" rows="3"></textarea>
+
+            <div class="modal-buttons">
+                <button type="button" id="btnCancelarEditar" class="btn-cancelar">Cancelar</button>
+                <button type="submit" class="btn-guardar">Guardar Cambios</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="codigo-firebase.js"></script>
+
+</body>
+</html>
+
+
+
+
+

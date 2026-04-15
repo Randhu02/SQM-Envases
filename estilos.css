@@ -1,0 +1,838 @@
+/* Tipografía profesional */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+* {
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: 
+        linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
+        url('img/premium_photo-1661963131307-f79ad259ccfc.avif');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: #fff;
+}
+
+/* ========== PANTALLA DE INICIO ========== */
+#inicioContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modo-box {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2.5rem;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    border: 2px solid #0047AB;
+    text-align: center;
+}
+
+.modo-box h2 {
+    margin-top: 0;
+    color: #0047AB;
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+}
+
+.modo-opcion {
+    padding: 25px;
+    margin: 15px 0;
+    border-radius: 10px;
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+}
+
+.modo-opcion h3 {
+    color: #0047AB;
+    margin-top: 0;
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+}
+
+.modo-opcion p {
+    color: #666;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.btn-modo-vista, .btn-modo-admin {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.btn-modo-vista {
+    background: #2C5F8A;
+    color: white;
+}
+
+.btn-modo-vista:hover {
+    background: #1a3f5c;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-modo-admin {
+    background: #0047AB;
+    color: white;
+}
+
+.btn-modo-admin:hover {
+    background: #003380;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.separador {
+    position: relative;
+    margin: 30px 0;
+    text-align: center;
+}
+
+.separador::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: #dee2e6;
+}
+
+.separador span {
+    background: white;
+    padding: 0 15px;
+    color: #666;
+    font-weight: 500;
+    position: relative;
+    z-index: 1;
+}
+
+/* ========== FORMULARIO DE LOGIN ========== */
+
+.login-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.login-box {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2.5rem;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 450px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    border: 2px solid #0047AB;
+}
+
+.login-box h2 {
+    margin-top: 0;
+    color: #0047AB;
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+}
+
+.login-box p {
+    color: #333;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.login-box input {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 1rem;
+    background: #fff;
+}
+
+.login-box input:focus {
+    outline: none;
+    border-color: #0047AB;
+    box-shadow: 0 0 0 3px rgba(0, 71, 171, 0.2);
+}
+
+.login-box button {
+    width: 100%;
+    padding: 14px;
+    background: #0047AB;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 10px 0 5px 0;
+    transition: all 0.3s ease;
+}
+
+.login-box button:hover {
+    background: #003380;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.error-message {
+    color: #dc3545;
+    background: #f8d7da;
+    padding: 12px;
+    border-radius: 8px;
+    margin: 15px 0;
+    border: 1px solid #f5c6cb;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.login-options {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.btn-volver {
+    background: #2C5F8A;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.3s ease;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.btn-volver:hover {
+    background: #1a3f5c;
+}
+
+/* ========== CONTENEDOR PRINCIPAL ========== */
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 30px;
+}
+
+/* Título */
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2.4rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    color: #fff;
+}
+
+/* ========== BARRA DE USUARIO ========== */
+
+.user-bar {
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 12px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.user-bar > div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#userEmail {
+    font-weight: 500;
+    color: #4A90E2;
+}
+
+.btn-cambiar {
+    background: #2C5F8A;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.3s ease;
+    margin-right: 10px;
+}
+
+.btn-cambiar:hover {
+    background: #1a3f5c;
+}
+
+#btnLogout {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.3s ease;
+}
+
+#btnLogout:hover {
+    background: #a71d2a;
+}
+
+/* ========== BOTÓN REORDENAR ========== */
+
+#btnRecalcular {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+#btnRecalcular:hover {
+    background-color: #a71d2a;
+    transform: translateY(-2px);
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* ========== SEPARACIÓN MEJORADA ENTRE BOTONES ========== */
+
+/* Separación general para todos los botones */
+button {
+    margin-top: 15px;
+    margin-bottom: 5px;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 6px;
+    background-color: #0047AB;
+    color: #fff;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: #003380;
+}
+
+/* Para botones consecutivos en la misma línea */
+button + button {
+    margin-left: 10px;
+}
+
+/* Botones en formularios principales */
+form button, .bloque button {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+/* ========== FORMULARIO DE INVENTARIO ========== */
+
+#formContainer {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 25px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+
+/* Formularios y bloques */
+form, .bloque {
+    background: rgba(255, 255, 255, 0.2);
+    color: #333;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+}
+
+/* Labels */
+label {
+    display: block;
+    margin-top: 12px;
+    font-weight: 500;
+    color: #fff;
+}
+
+/* Inputs y textarea */
+input, select, textarea {
+    width: 100%;
+    padding: 8px 10px;
+    margin-top: 5px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background: rgba(255, 255, 255, 0.9);
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.95rem;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 60px;
+}
+
+/* Títulos de sección */
+h2 {
+    color: #fff;
+    margin-top: 0;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ========== TABLAS ========== */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+table th {
+    background-color: #0047AB;
+    color: white;
+    padding: 12px 10px;
+    text-align: center;
+    font-weight: 500;
+}
+
+table td {
+    padding: 10px 8px;
+    border-bottom: 1px solid #ddd;
+    color: #333;
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* Estilos para drag & drop */
+.sortable-ghost {
+    opacity: 0.4;
+    background-color: #e0e0e0;
+}
+
+.sortable-drag {
+    cursor: grabbing !important;
+    opacity: 0.8;
+}
+
+/* Columna de arrastre */
+table td:first-child {
+    cursor: grab;
+    user-select: none;
+    font-size: 18px;
+    color: #666;
+    text-align: center;
+    width: 40px;
+}
+
+table td:first-child:active {
+    cursor: grabbing;
+}
+
+/* Hover en filas */
+table tbody tr:hover {
+    background-color: rgba(0, 71, 171, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+/* Títulos de producto */
+h3 {
+    margin-top: 30px;
+    color: #0047AB;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px 15px;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+/* ========== BOTONES EN TABLA ========== */
+
+/* Botón Eliminar (rojo) */
+table .btn-eliminar {
+    background-color: #dc3545 !important;
+    color: white !important;
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    margin-top: 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 70px;
+    text-align: center;
+    display: inline-block;
+}
+
+table .btn-eliminar:hover {
+    background-color: #a71d2a !important;
+    transform: translateY(-1px);
+}
+
+/* Botón Editar outline */
+table .btn-editar {
+    background-color: transparent !important;
+    color: #0047AB !important;
+    border: 2px solid #0047AB !important;
+    padding: 5px 10px;
+    font-size: 0.85rem;
+    margin-top: 0;
+    margin-right: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 70px;
+    text-align: center;
+    display: inline-block;
+}
+
+table .btn-editar:hover {
+    background-color: #0047AB !important;
+    color: white !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 71, 171, 0.2);
+}
+
+/* Separación entre botones en tabla */
+table td .btn-editar {
+    margin-right: 8px;
+    margin-bottom: 5px;
+}
+
+table td .btn-eliminar {
+    margin-bottom: 5px;
+}
+
+/* ========== MENSAJES INFORMATIVOS ========== */
+
+.vista-message {
+    background: rgba(74, 144, 226, 0.2);
+    color: #e2f0ff;
+    padding: 12px;
+    border-radius: 6px;
+    margin: 15px 0;
+    border-left: 4px solid #4A90E2;
+    font-size: 0.95rem;
+}
+
+.admin-message {
+    background: rgba(40, 167, 69, 0.2);
+    color: #d4edda;
+    padding: 12px;
+    border-radius: 6px;
+    margin: 15px 0;
+    border-left: 4px solid #28a745;
+    font-size: 0.95rem;
+}
+
+.info-box {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    border-left: 4px solid #ffc107;
+}
+
+.info-box h3 {
+    color: #ffc107;
+    background: transparent;
+    padding: 0;
+    margin-top: 0;
+}
+
+.info-box p {
+    color: #fff;
+    margin: 8px 0;
+}
+
+.permiso {
+    color: #6c757d;
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+/* ========== RESUMEN Y EXCEL ========== */
+
+/* Resaltar última fila de stock */
+.ultimo-stock {
+    background-color: rgba(40, 167, 69, 0.15) !important;
+    font-weight: bold;
+    border-left: 3px solid #28a745;
+}
+
+/* Botón Excel */
+.btn-excel {
+    background-color: #28a745 !important;
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-excel:hover {
+    background-color: #218838 !important;
+}
+
+.resumen-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.resumen-header p {
+    color: #fff;
+    margin: 0;
+    font-size: 1rem;
+}
+
+/* Tabla resumen */
+#tablaResumenContainer table {
+    margin-top: 0;
+}
+
+#tablaResumenContainer th {
+    background-color: #28a745;
+}
+
+.resumen-total {
+    background-color: rgba(0, 71, 171, 0.15);
+    font-weight: bold;
+}
+
+.resumen-total td {
+    font-weight: bold;
+}
+
+/* Números con separador de miles */
+.numero-formateado {
+    font-family: 'Courier New', monospace;
+    font-weight: 500;
+}
+
+/* ========== MODAL DE EDITAR ========== */
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.modal-content {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    border: 2px solid #0047AB;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.modal-header h3 {
+    margin: 0;
+    color: #0047AB;
+    background: none;
+    padding: 0;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: #666;
+    padding: 0;
+    margin: 0;
+    line-height: 1;
+}
+
+.modal-close:hover {
+    color: #dc3545;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.modal-buttons button {
+    flex: 1;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.btn-guardar {
+    background-color: #28a745 !important;
+}
+
+.btn-guardar:hover {
+    background-color: #218838 !important;
+}
+
+.btn-cancelar {
+    background-color: #2C5F8A !important;
+}
+
+.btn-cancelar:hover {
+    background-color: #1a3f5c !important;
+}
+
+/* ========== RESPONSIVE ========== */
+
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .modo-box, .login-box {
+        padding: 1.5rem;
+        margin: 15px;
+    }
+    
+    .user-bar {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .user-bar > div {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .user-bar button {
+        width: 100%;
+        margin-right: 0 !important;
+        margin-left: 0 !important;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    .modo-opcion {
+        padding: 15px;
+    }
+    
+    .resumen-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .btn-excel {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    /* Botones en tabla en columna en móviles */
+    table td .btn-editar, 
+    table td .btn-eliminar {
+        display: block;
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 8px;
+    }
+    
+    table td .btn-eliminar {
+        margin-bottom: 0;
+    }
+    
+    /* Ajuste de tabla en móvil */
+    table {
+        font-size: 0.85rem;
+    }
+    
+    table th, table td {
+        padding: 6px 4px;
+    }
+    
+    /* Columna de arrastre más pequeña en móvil */
+    table td:first-child {
+        font-size: 14px;
+        width: 30px;
+    }
+}
+
+/* Mensaje cuando no hay registros */
+#contenedorTablas p {
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+/* Estilo para la instrucción de arrastre */
+#contenedorTablas p:first-of-type {
+    background: rgba(0, 71, 171, 0.2);
+    border-left: 4px solid #0047AB;
+}
